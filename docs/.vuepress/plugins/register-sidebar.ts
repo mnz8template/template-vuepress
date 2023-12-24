@@ -135,14 +135,14 @@ function defaultCallback(pathArray: PathCollection[]): SidebarConfig {
     let path_ele = path.split('/');
 
     if (path_ele.length < 2) {
-      temp.push({ text: path.charAt(0).toUpperCase() + path.slice(1), link: path_absolute });
+      temp.push({ text: textGenerate(path), link: path_absolute });
     } else {
       let current = temp;
       let end_segment = path_ele[path_ele.length - 1];
 
       while (path_ele.length > 1) {
         const segment = path_ele.shift() || '';
-        const text = segment.charAt(0).toUpperCase() + segment.slice(1);
+        const text = textGenerate(segment);
         const index = current.findIndex((ele) => segment && typeof ele !== 'string' && ele?.text === text);
 
         if (index === -1) {
@@ -165,7 +165,7 @@ function defaultCallback(pathArray: PathCollection[]): SidebarConfig {
       }
 
       if (Array.isArray(current)) {
-        current.push({ text: end_segment.charAt(0).toUpperCase() + end_segment.slice(1), link: path_absolute, collapsible: true });
+        current.push({ text: textGenerate(end_segment), link: path_absolute, collapsible: true });
       }
     }
   }
@@ -175,4 +175,8 @@ function defaultCallback(pathArray: PathCollection[]): SidebarConfig {
 
 export interface SidebarPluginPageData {
   sidebarItemsFromPlugin: SidebarConfigArray;
+}
+
+function textGenerate(s: string) {
+  return (s.charAt(0).toUpperCase() + s.slice(1)).replace(/.md$/, '');
 }
