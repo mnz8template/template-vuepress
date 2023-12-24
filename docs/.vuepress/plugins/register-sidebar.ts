@@ -155,12 +155,10 @@ function defaultCallback(pathArray: PathCollection[]): SidebarConfig {
           current = (current[current.length - 1] as SidebarGroup).children;
         } else {
           // @ts-ignore
-          if (current[index]?.children) {
-            // @ts-ignore
-            current = current[index].children;
-          } else {
-            current = current[index];
+          if (!current[index]?.children) {
+            current[index]['children'] = [];
           }
+          current = current[index].children;
         }
       }
 
