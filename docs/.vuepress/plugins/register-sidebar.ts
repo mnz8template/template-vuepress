@@ -51,7 +51,7 @@ const sidebarPlugin = (callback: Callback = defaultCallback): Plugin => {
 export default sidebarPlugin;
 
 // fork vuepress packages\cli\src\commands\dev\watchPageFiles.ts
-export const watchPageFiles = (app: App, watchers: FSWatcher[]) => {
+export const watchPageFiles = (app: App, watchers: FSWatcher[], restart: () => Promise<void>) => {
   // watch page files
   const pagesWatcher = chokidar.watch(app.options.pagePatterns, {
     cwd: app.dir.source(),
@@ -60,11 +60,11 @@ export const watchPageFiles = (app: App, watchers: FSWatcher[]) => {
 
   // 多文件会存在问题
   pagesWatcher.on('add', async (filePathRelative) => {
-    console.log('add', filePathRelative);
+    restart();
   });
 
   pagesWatcher.on('unlink', async (filePathRelative) => {
-    console.log('unlink', filePathRelative);
+    restart();
   });
 
   watchers.push(pagesWatcher);
