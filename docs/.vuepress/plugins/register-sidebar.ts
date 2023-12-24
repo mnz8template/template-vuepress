@@ -33,6 +33,16 @@ const sidebarPlugin = (callback: Callback = defaultCallback): Plugin => {
         // 覆盖 frontmatter.sidebar
         page.data.frontmatter.sidebar = pathResult;
       },
+      // 如果没有主页，增加默认主页
+      // https://github.com/vuepress/docs/blob/06559c9327cbbd7ab5a93c632d4a3992b4c5ddd8/docs/zh/advanced/cookbook/adding-extra-pages.md
+      async onInitialized(app) {
+        // 如果主页不存在
+        if (app.pages.length > 1 && app.pages.every((page) => page.path !== '/')) {
+          const someonePage = app.pages?.[0];
+          someonePage.path = '/';
+          app.pages.push(someonePage);
+        }
+      },
       onWatched: watchPageFiles,
     };
   };
