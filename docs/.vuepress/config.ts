@@ -11,8 +11,8 @@ export default defineUserConfig({
   }),
 
   plugins: [sidebarPlugin()],
+
   // pagePatterns 默认值 ['**/*.md', '!.vuepress', '!node_modules']
-  // 使用 ['**/*.md', '!**/README.md', '!.vuepress', '!node_modules'] 来排除所有的 README.md 文件。
   // pagePatterns: [],
 
   // 覆盖组件别名 调试用
