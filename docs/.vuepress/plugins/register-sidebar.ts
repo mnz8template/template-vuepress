@@ -42,7 +42,6 @@ const sidebarPlugin = (sidebarCallback: SidebarCallback = sidebarGenerate): Plug
 
       const pages = app?.pages || [];
       const sidebar = sidebarCallback(pages);
-      console.dir(sidebar, { depth: null });
       pages.forEach((page) => {
         page.data.frontmatter.sidebar = sidebar;
       });
